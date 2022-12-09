@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Vianu Arena (*)</title>
+        <title>Login</title>
       </Head>
 
       <main>
@@ -24,10 +24,6 @@ export default function Home() {
           </table>
         </div>
       </main>
-
-      <footer className="w-full p-2 bg-gray-500 text-white">
-        Made with love by Mircea Rebengiuc. <a href="https://github.com/mircea007/vianu">contribute!</a>
-      </footer>
     </div>
   )
 }
