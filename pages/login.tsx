@@ -2,7 +2,7 @@ import Head from 'next/head'
 //import Image from 'next/image'
 
 export default function Home() {
-  var gigel = "geaigel";
+  const gigel = "geaigel";
 
   return (
     <div>
@@ -16,11 +16,13 @@ export default function Home() {
         <div>
           Problem list:
           <table>
-          <tr><th>Problem ID</th><th>Source</th><th>Solves</th></tr>
-          <tr><td>a</td><td>a</td><td>a</td></tr>
-          <tr><td>a</td><td>a</td><td>a</td></tr>
-          <tr><td>a</td><td>a</td><td>a</td></tr>
-          <tr><td>a</td><td>a</td><td>a</td></tr>
+            <tbody>
+              <tr><th>Problem ID</th><th>Source</th><th>Solves</th></tr>
+              <tr><td>a</td><td>a</td><td>a</td></tr>
+              <tr><td>a</td><td>a</td><td>a</td></tr>
+              <tr><td>a</td><td>a</td><td>a</td></tr>
+              <tr><td>a</td><td>a</td><td>a</td></tr>
+            </tbody>
           </table>
         </div>
       </main>
