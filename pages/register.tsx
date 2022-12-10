@@ -6,13 +6,13 @@ import { Header } from '../components/Header.tsx'
 const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[a-z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
 
 export default function Home() {
-  const [uname, setUname] = useState( { value: '', comment: '' } );
-  const [pass, setPass] = useState( { value: '', comment: '' } );
-  const [conf, setConf] = useState( { value: '', comment: '' } );
-  const [email, setEmail] = useState( { value: '', comment: '' } );
+  const [uname, setUname] = useState( { value: '', comment: '' } )
+  const [pass, setPass] = useState( { value: '', comment: '' } )
+  const [conf, setConf] = useState( { value: '', comment: '' } )
+  const [email, setEmail] = useState( { value: '', comment: '' } )
 
-  const submit = evt => {
-    evt.preventDefault();
+  const submit = async (evt) => {
+    evt.preventDefault()
 
     if( !uname.value ){
       setUname( { value: '', comment: 'You must choose a username' } )
@@ -40,7 +40,27 @@ export default function Home() {
       return
     }
 
-    console.log( uname.value + ' ' + pass.value + ' ' + conf.value + ' ' + email.value );
+    const userData = {
+      name: uname.value,
+      pass: pass.value,
+      email: email.value
+    }
+
+    //console.log( uname.value + ' ' + pass.value + ' ' + conf.value + ' ' + email.value );
+
+    const response = await fetch("/api/register", {
+      method: "post",
+      body: JSON.stringify( userData ),
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      }
+    })
+
+    const json_response = await response.text()
+
+    if( response.status == 400 )
+      if( json_response == 'User already exists' )
+        setUname( { value: '', comment: 'Username taken' } )
   }
 
   return (
