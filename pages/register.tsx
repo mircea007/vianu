@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { InputField, SubmitButton } from '../components/Forms.tsx'
+import { Header } from '../components/Header.tsx'
 
 const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[a-z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
 
@@ -48,9 +49,11 @@ export default function Home() {
         <title>Register</title>
       </Head>
 
-      <main>
-        <h1 className="text-3xl">Vianu Arena (*)</h1>
-        <form onSubmit={submit} className="flex flex-col items-center bg-main-50 p-2 rounded-xl max-w-fit">
+      <Header className="fixed top-0"/>
+      <main className = "w-full h-screen flex justify-center items-center">
+        <form onSubmit={submit} className="flex flex-col items-center bg-main-50 p-6 gap-2 rounded-xl m-16 w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+          <h2 className="text-5xl text-main-500 mb-2">Register</h2>
+          <hr className="border-main-500 w-full border-1"/>
           <InputField
             type="text"
             label="Username"

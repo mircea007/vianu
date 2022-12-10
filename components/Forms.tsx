@@ -14,7 +14,7 @@ export function InputField( { type, value, onChange, comment, label, placeholder
         <span className="text-lg font-bold mb-2">{label}</span>
         <br />
         <input
-        className={"transition transition-all duration-300 float-right px-1 outline outline-2 rounded-lg " + (error ? "outline-red-300 focus:outline-red-400" : "outline-gray-300 focus:outline-main-300")}
+        className={"transition transition-all duration-300 float-right px-2 py-1 outline outline-2 rounded-lg " + (error ? "outline-red-300 focus:outline-red-400" : "outline-gray-300 focus:outline-main-300")}
         type={type}
         value={value}
         placeholder={placeholder}
