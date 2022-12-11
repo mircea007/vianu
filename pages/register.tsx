@@ -2,6 +2,8 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { InputField, SubmitButton } from '../components/Forms.tsx'
 import { Header } from '../components/Header.tsx'
+import { useRouter } from 'next/router'
+import { getToken, setToken } from '../components/JWT.ts'
 
 const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[a-z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
 
@@ -10,6 +12,9 @@ export default function Home() {
   const [pass, setPass] = useState( { value: '', comment: '' } )
   const [conf, setConf] = useState( { value: '', comment: '' } )
   const [email, setEmail] = useState( { value: '', comment: '' } )
+  const [loading, setLoading] = useState( false )
+
+  const router = useRouter()
 
   const submit = async (evt) => {
     evt.preventDefault()
@@ -46,7 +51,7 @@ export default function Home() {
       email: email.value
     }
 
-    //console.log( uname.value + ' ' + pass.value + ' ' + conf.value + ' ' + email.value );
+    setLoading( true )
 
     const response = await fetch("/api/register", {
       method: "post",
@@ -56,11 +61,17 @@ export default function Home() {
       }
     })
 
-    const json_response = await response.text()
+    const json_response = await response.json()
 
-    if( response.status == 400 )
-      if( json_response == 'User already exists' )
+    if( response.status == 400 ){
+      if( json_response.error == 'User already exists' )
         setUname( { value: '', comment: 'Username taken' } )
+    }else if( response.status == 201 ){
+      setToken( json_response.token )
+      router.push( '/' )
+    }
+
+    setLoading( false )
   }
 
   return (
@@ -109,7 +120,7 @@ export default function Home() {
             comment={email.comment}
             placeholder="you@example.com"
           />
-          <SubmitButton value="Sign Up"/>
+          <SubmitButton value="Sign Up" disabled={loading}/>
         </form>
       </main>
     </div>

@@ -26,12 +26,13 @@ export function InputField( { type, value, onChange, comment, label, placeholder
   )
 }
 
-export function SubmitButton({ value }){
+export function SubmitButton({ value, disabled }){
   return (
     <input
-    className="font-bold uppercase bg-main-500 text-white p-2 rounded-lg hover:bg-main-600 cursor-pointer focus:outline focus:outline-2 focus:outline-main-300"
+    className="font-bold uppercase bg-main-500 text-white p-2 rounded-lg hover:bg-main-600 cursor-pointer focus:outline focus:outline-2 focus:outline-main-300 disabled:bg-gray-300 disabled:text-gray-200 disabled:outline-0"
     type="submit"
     value={value ? value : "Submit"}
+    disabled={disabled}
     />
   )
 }
