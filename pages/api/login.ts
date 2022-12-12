@@ -4,8 +4,7 @@ import { Client } from 'pg'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const verify_query = "SELECT * FROM users WHERE name=$1"
-const insert_query = "INSERT INTO users (name, phash, email) VALUES ($1, $2, $3) RETURNING id"
+const user_query = "SELECT * FROM users WHERE name=$1"
 const bcrypt_niter = 11;
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse<Data> ){
@@ -21,27 +20,29 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   try{
     await client.connect()
 
-    const vres = await client.query( verify_query, [user_data.name] )
+    const qres = await client.query( user_query, [user_data.name] )
 
-    if( vres.rowCount > 0 ){
+    if( qres.rowCount == 0 ){
       client.end();
-      res.status( 400 ).send( { error: 'User already exists' } )
+      res.status( 400 ).send( { error: 'No user with that name' } )
       return
     }
 
-    bcrypt.hash( user_data.pass, bcrypt_niter ).then( phash => {
-      client.query( insert_query, [user_data.name, phash, user_data.email] ).then( qres => {
-        const user_id = qres.rows[0].id;
+    client.end();
 
+    bcrypt.compare( user_data.pass, qres.rows[0].phash ).then( correct => {
+      if( correct == true ){
         const user_token = jwt.sign({
           name: user_data.name,
-          id: user_id
+          id: qres.rows[0].id
         }, process.env.JWT_TOKEN )
-    
-        client.end();
-        res.status( 201 ).json({ token: user_token })
-      })
+
+        res.status( 200 ).json({ token: user_token })
+      }else{
+        res.status( 400 ).json({ error: 'Password incorect' })
+      }
     })
+
   }catch( err ){ // connect error
     client.end();
     console.log( err )

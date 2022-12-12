@@ -10,7 +10,7 @@ export default function Home() {
 
       <Header/>
       <main>
-        This website is work-in-progress.
+        
       </main>
     </div>
   )
