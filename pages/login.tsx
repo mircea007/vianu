@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import { InputField, SubmitButton } from '../components/Forms.tsx'
-import { Header } from '../components/Header.tsx'
+import { InputField, SubmitButton } from '../components/Forms' // .tsx
+import { Header } from '../components/Header' // .tsx
 import { useRouter } from 'next/router'
-import { getToken, setToken } from '../components/JWT.ts'
+import { getToken, setToken } from '../components/JWT' // .ts
 
 export default function Home() {
   const [uname, setUname] = useState( { value: '', comment: '' } )
@@ -12,7 +12,7 @@ export default function Home() {
 
   const router = useRouter()
 
-  const submit = async (evt) => {
+  const submit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
 
     if( !uname.value ){
@@ -70,7 +70,7 @@ export default function Home() {
             type="text"
             label="Username"
             value={uname.value}
-            onChange={ evt => setUname( { value: evt.target.value, comment: '' } ) }
+            onChange={ (evt: React.ChangeEvent<HTMLInputElement>) => setUname( { value: evt.target.value, comment: '' } ) }
             comment={uname.comment}
             placeholder="Your nickname"
           />
@@ -78,7 +78,7 @@ export default function Home() {
             type="password"
             label="Password"
             value={pass.value}
-            onChange={ evt => {
+            onChange={ (evt: React.ChangeEvent<HTMLInputElement>) => {
               setPass( { value: evt.target.value, comment: '' } )
             } }
             comment={pass.comment}

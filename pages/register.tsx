@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import { InputField, SubmitButton } from '../components/Forms.tsx'
-import { Header } from '../components/Header.tsx'
+import { InputField, SubmitButton } from '../components/Forms' // .tsx
+import { Header } from '../components/Header' // .tsx
 import { useRouter } from 'next/router'
-import { getToken, setToken } from '../components/JWT.ts'
+import { getToken, setToken } from '../components/JWT' // .ts
 
 const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[a-z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
 
@@ -16,7 +16,7 @@ export default function Home() {
 
   const router = useRouter()
 
-  const submit = async (evt) => {
+  const submit = async (evt: React.SyntheticEvent) => {
     evt.preventDefault()
 
     if( !uname.value ){
@@ -89,7 +89,7 @@ export default function Home() {
             type="text"
             label="Username"
             value={uname.value}
-            onChange={ evt => setUname( { value: evt.target.value, comment: '' } ) }
+            onChange={ (evt: React.ChangeEvent<HTMLInputElement>) => setUname( { value: evt.target.value, comment: '' } ) }
             comment={uname.comment}
             placeholder="Your nickname"
           />
@@ -97,7 +97,7 @@ export default function Home() {
             type="password"
             label="Password"
             value={pass.value}
-            onChange={ evt => {
+            onChange={ (evt: React.ChangeEvent<HTMLInputElement>) => {
               setPass( { value: evt.target.value, comment: '' } )
               setConf( { value: '', comment: '' } )
             } }
@@ -108,7 +108,7 @@ export default function Home() {
             type="password"
             label="Confirm"
             value={conf.value}
-            onChange={ evt => setConf( { value: evt.target.value, comment: '' } ) }
+            onChange={ (evt: React.ChangeEvent<HTMLInputElement>) => setConf( { value: evt.target.value, comment: '' } ) }
             comment={conf.comment}
             placeholder="Confirm password"
           />
@@ -116,7 +116,7 @@ export default function Home() {
             type="email"
             label="Email"
             value={email.value}
-            onChange={ evt => setEmail( { value: evt.target.value, comment: '' } ) }
+            onChange={ (evt: React.ChangeEvent<HTMLInputElement>) => setEmail( { value: evt.target.value, comment: '' } ) }
             comment={email.comment}
             placeholder="you@example.com"
           />

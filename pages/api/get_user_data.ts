@@ -1,10 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 //import { Client } from 'pg'
 import jwt from 'jsonwebtoken'
+import type { JwtPayload } from 'jsonwebtoken'
+
+declare module "jsonwebtoken" {
+  export interface JwtPayload {
+    name: string,
+    id: number
+  }
+}
 
 //const user_query = "SELECT * FROM users WHERE id=$1"
 
-export default async function handler( req: NextApiRequest, res: NextApiResponse<Data> ){
+export default async function handler( req: NextApiRequest, res: NextApiResponse ){
   //const client = new Client({
   //  host: process.env.PGHOST,
   //  port: process.env.PGPORT,
@@ -13,7 +21,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   //})
 
   try{
-    const user_token = jwt.verify( req.body, process.env.JWT_TOKEN )
+    const user_token: { name: string } = jwt.verify( req.body, process.env.JWT_TOKEN as string ) as JwtPayload
 
     // no need for database query for now...
     // await client.connect()
@@ -24,6 +32,6 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     res.status( 200 ).json({ name: user_token.name })
   }catch( err ){ // connect error
     console.log( err )
-    res.status( 500 ).json( { error: 'Internal Server error' } )
+    res.status( 500 ).json({ error: 'Internal Server error' })
   }
 }

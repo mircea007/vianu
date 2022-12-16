@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Header } from '../components/Header.tsx'
+import { Header } from '../components/Header' // .tsx
 
 export default function Home() {
   return (

@@ -7,10 +7,10 @@ import jwt from 'jsonwebtoken'
 const user_query = "SELECT * FROM users WHERE name=$1"
 const bcrypt_niter = 11;
 
-export default async function handler( req: NextApiRequest, res: NextApiResponse<Data> ){
+export default async function handler( req: NextApiRequest, res: NextApiResponse ){
   const client = new Client({
     host: process.env.PGHOST,
-    port: process.env.PGPORT,
+    port: +(process.env.PGPORT as string),
     password: process.env.PGPASSWORD,
     user: process.env.PGUSER,
   })
@@ -35,7 +35,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         const user_token = jwt.sign({
           name: user_data.name,
           id: qres.rows[0].id
-        }, process.env.JWT_TOKEN )
+        }, process.env.JWT_TOKEN as string )
 
         res.status( 200 ).json({ token: user_token })
       }else{
