@@ -23,17 +23,17 @@ export async function getPbPage( pagenum: number ){
 
     return qres.rows
   }catch( err ){
+    client.end()
     throw err // error handling is not this function's job
   }
 }
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse ){
   try{
-    const data = await getPbPage( (req.query.page || 1) - 1 )
+    const data = await getPbPage( (+(req.query.page as string) || 1) - 1 )
 
     res.status( 200 ).json( data );
   }catch( err ){ // connect error
-    client.end();
     console.log( err )
     res.status( 500 ).json( { error: 'Internal Server error' } )
   }
