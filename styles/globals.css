@@ -5,3 +5,19 @@
 a {
   @apply text-blue-300 hover:text-blue-400;
 }
+
+td, th {
+  @apply border border-black p-2;
+}
+
+th {
+  @apply bg-main-600 text-white;
+}
+
+tr.even {
+  @apply bg-gray-200;
+}
+
+tr {
+  @apply hover:bg-gray-300;
+}
