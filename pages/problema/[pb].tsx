@@ -21,12 +21,15 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
       <Header/>
       <main className="w-full p-8 flex flex-col gap-2">
-        Problema {pbdata.title} <br />
-        scrisa de {pbdata.authors} <br />
-        sursa {pbdata.source} <br />
-        adaugata de {pbdata.contrib} <br />
-        si rezolvata de {pbdata.solves} <br />
+        <h1 className="text-5xl mb-4">{pbdata.title}</h1>
         <hr />
+        <div className="flex flex-row gap-2 w-full justify-between">
+          <span> autori: {pbdata.authors} </span>
+          <span> sursa: {pbdata.source} </span>
+          <span> adaugata de: {pbdata.contrib} </span>
+          <span> rezolvata de {pbdata.solves} </span>
+        </div>
+        <hr className="mb-4"/>
         <div dangerouslySetInnerHTML={{__html: pbdata.statement}} />
       </main>
     </div>
