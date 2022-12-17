@@ -3,8 +3,8 @@ import { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 
-import { Header } from '../components/Header' // .tsx
-import { getPbData } from './api/getpb' // .ts
+import { Header } from '../../components/Header' // .tsx
+import { getPbData } from '.././api/getpb' // .ts
 
 interface PageProps {
   pbdatastr: string
