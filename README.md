@@ -4,6 +4,11 @@ New programming practice hub for National Colege of Informatics "Tudor Vianu", B
 
 ## Todo
 
+### Current Minor technicalaties
+
+* fix typescript problems in Table.tsx
+* Is it normal to store problem statements in the db?
+
 ### Big chunks to implement before initial release
 
 * Evaluator & code submision ui

@@ -2,11 +2,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Client } from 'pg'
 
-const page_query = "SELECT title, authors, source, solves FROM problems ORDER BY id LIMIT $1 OFFSET $2"
+const pb_query = "SELECT problems.title, problems.authors, problems.source, problems.solves, users.name AS contrib, problems.statement FROM problems LEFT JOIN users ON problems.contributor=users.id AND problems.name=$1"
 
-const PAGE_SIZE = 25;
-
-export async function getPbPage( pagenum: number ){
+export async function getPbData( pbname: string ){
   const client = new Client({
     host: process.env.PGHOST,
     port: +(process.env.PGPORT as string),
@@ -17,7 +15,7 @@ export async function getPbPage( pagenum: number ){
   try{
     await client.connect()
 
-    const qres = await client.query( page_query, [PAGE_SIZE, PAGE_SIZE * pagenum] )
+    const qres = await client.query( pb_query, [pbname] )
 
     client.end()
 
@@ -28,6 +26,7 @@ export async function getPbPage( pagenum: number ){
   }
 }
 
+/*
 export default async function handler( req: NextApiRequest, res: NextApiResponse ){
   try{
     const data = await getPbPage( (+(req.query.page as string) || 1) - 1 )
@@ -38,3 +37,4 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     res.status( 500 ).json( { error: 'Internal Server error' } )
   }
 }
+*/

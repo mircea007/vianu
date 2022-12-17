@@ -21,10 +21,9 @@ interface PageProps {
 }
 
 const table_head = [
-  { prop: 'name', name: 'Problema' },
+  { prop: 'title', name: 'Problema' },
   { prop: 'source', name: 'Sursa' },
-  { prop: 'author', name: 'Autor' },
-  { prop: 'contributor', name: 'Adaugata de' },
+  { prop: 'authors', name: 'Autori' },
   { prop: 'solves', name: 'Rezolvata de' }
 ];
 
