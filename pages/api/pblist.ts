@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Client } from 'pg'
 
-const page_query = "SELECT title, authors, source, solves FROM problems ORDER BY id LIMIT $1 OFFSET $2"
+const page_query = "SELECT name, title, authors, source, solves FROM problems ORDER BY id LIMIT $1 OFFSET $2"
 
 const PAGE_SIZE = 25;
 

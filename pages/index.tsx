@@ -1,15 +1,16 @@
 import Head from 'next/head'
 import { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
+import Link from 'next/link'
 
 import { Header } from '../components/Header' // .tsx
 import { Table } from '../components/Table' // .tsx
 import { getPbPage } from './api/pblist' // .ts
 
-
 interface PbData {
-  id: number
+  id?: number
   name: string
+  title: string
   source: string
   author?: string
   contributor?: string
@@ -20,14 +21,14 @@ interface PageProps {
   tdata_string: string;
 }
 
-const table_head = [
-  { prop: 'title', name: 'Problema' },
-  { prop: 'source', name: 'Sursa' },
-  { prop: 'authors', name: 'Autori' },
-  { prop: 'solves', name: 'Rezolvata de' }
-];
-
 const Home: NextPage<PageProps> = ({ tdata_string }) => {
+  const tdata = JSON.parse( tdata_string ).map( row => [
+    (<Link href={"/problema/" + row.name}>{row.title}</Link>),
+    row.source,
+    row.authors,
+    row.solves,
+  ])
+
   return (
     <div>
       <Head>
@@ -38,11 +39,11 @@ const Home: NextPage<PageProps> = ({ tdata_string }) => {
       <main className="w-full p-8 flex flex-col gap-2">
         <span className="text-2xl">Arhiva de probleme</span>
         <hr />
-        <Table<PbData>
-          data={ JSON.parse( tdata_string ) }
-          header={ table_head }
+        <Table
           className="w-full" 
           addIndexes={true}
+          header={[ 'Problema', 'Sursa', 'Autori', 'Rezolvata de' ]}
+          data={tdata}
         />
       </main>
     </div>

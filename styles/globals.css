@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 a {
-  @apply text-blue-300 hover:text-blue-400;
+  @apply text-blue-500 hover:text-blue-400;
 }
 
 td, th {
@@ -14,7 +14,7 @@ th {
   @apply bg-main-600 text-white;
 }
 
-tr.even {
+tr.row-even {
   @apply bg-gray-200;
 }
 
