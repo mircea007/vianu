@@ -4,7 +4,7 @@ interface TableProps {
   addIndexes?: boolean
   className?: string
   header: string[]
-  data: Array<Array<ReactElement>>
+  data: (ReactElement | string)[][]
 }
 
 export function Table( { header, data, className, addIndexes }: TableProps ){

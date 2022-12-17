@@ -12,8 +12,8 @@ interface PbData {
   name: string
   title: string
   source: string
-  author?: string
-  contributor?: string
+  authors: string
+  contrib?: string
   solves: number
 }
 
@@ -22,8 +22,8 @@ interface PageProps {
 }
 
 const Home: NextPage<PageProps> = ({ tdata_string }) => {
-  const tdata = JSON.parse( tdata_string ).map( row => [
-    (<Link href={"/problema/" + row.name}>{row.title}</Link>),
+  const tdata = JSON.parse( tdata_string ).map( (row: PbData, idx: number) => [
+    (<Link href={"/problema/" + row.name} key={idx}>{row.title}</Link>),
     row.source,
     row.authors,
     row.solves,

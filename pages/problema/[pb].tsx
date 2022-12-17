@@ -37,7 +37,7 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 }
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
-  const data = await getPbData( ctx.query.pb );
+  const data = await getPbData( ctx.query.pb as string );
 
   return { props: {
     pbdatastr: JSON.stringify( data )
