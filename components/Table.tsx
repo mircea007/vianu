@@ -7,7 +7,7 @@ interface TableProps {
   data: (ReactElement | string)[][]
 }
 
-export function Table( { header, data, className, addIndexes }: TableProps ){
+export default function Table( { header, data, className, addIndexes }: TableProps ){
   return (
     <table className={className}>
       <tbody>

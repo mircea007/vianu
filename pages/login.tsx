@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { InputField, SubmitButton } from '../components/Forms' // .tsx
-import { Header } from '../components/Header' // .tsx
+import Header from '../components/Header' // .tsx
 import { useRouter } from 'next/router'
 import { getToken, setToken } from '../components/JWT' // .ts
 
