@@ -5,6 +5,12 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import User from './User' // .tsx
 
+function PointlessAnimation( { text, className }: { text: string, className: string } ){
+  return (<div className={"flex flex-row gap-0 " + className}>{[...text].map( (ch: string, idx: number) => (
+    <span key={idx} className="inline-block hover:-translate-y-2 transition duration-200">{ch}</span>
+  ))}</div>)
+}
+
 export default function Header( { className }: { className?: string } ){
   const [login, setLogin] = useState( false )
   const [uname, setUname] = useState( '' )
@@ -36,9 +42,10 @@ export default function Header( { className }: { className?: string } ){
 
   return (
     <div className={"w-full bg-main-700 flex flex-row justify-between " + className || ""}>
-      <Link className="hover:font-bold hover:tracking-tight nostyle flex flex-row items-center text-5xl italic p-3" href="/">
-        <span className="text-main-400">Vianu</span>
-        <span className="text-white">Arena
+      <Link className="nostyle flex flex-row items-center text-5xl italic p-3" href="/">
+        <PointlessAnimation className="text-main-400" text="Vianu"></PointlessAnimation>
+        <span className="text-white flex flex-row gap-0">
+          <PointlessAnimation text="Arena" />
           <sup className="text-3xl">*</sup>
         </span>
       </Link>
