@@ -43,23 +43,28 @@ export default function Header( { className }: { className?: string } ){
         </span>
       </Link>
 
-      {login ? (
-        <div className="text-white bg-main-600 h-full p-2 flex flex-col items-center">
-          <User uname={uname} className="subtle hover:bg-main-500 transition duration-200 p-1 rounded-lg"/>
-          <button onClick={ _ => {
-            removeToken()
-            router.reload()
-          }} className="transition duration-200 text-lg text-white rounded-lg hover:bg-main-500 hover:text-white p-1 flex flex-row max-w-fit">
-            Logout
-            <ArrowRightOnRectangleIcon className="h-6" />
-          </button>
+      <div className="text-white h-full flex flex-row gap-0">
+        <div className="flex items-center justify-center p-2">
+          <Link href="/monitor" className="subtle text-2xl">Monitor</Link>
         </div>
-      ) : (
-        <div className="text-white bg-main-600 h-full flex flex-col self-stretch p-2">
-          <Link className="transition duration-200 text-lg text-white rounded-lg hover:bg-main-500 hover:text-white p-1 flex flex-row justify-between" href="/login">Login <ArrowLeftOnRectangleIcon className="h-6" /></Link>
-          <Link className="transition duration-200 text-lg text-white rounded-lg hover:bg-main-500 hover:text-white p-1 flex flex-row justify-between" href="/register">Register <ArrowLeftOnRectangleIcon className="h-6" /></Link>
-        </div>
-      )}
+        {login ? (
+          <div className="bg-main-600 h-full p-2 flex flex-col items-center">
+            <User uname={uname} className="subtle hover:bg-main-500 transition duration-200 p-1 rounded-lg"/>
+            <button onClick={ _ => {
+              removeToken()
+              router.reload()
+            }} className="transition duration-200 text-lg text-white rounded-lg hover:bg-main-500 hover:text-white p-1 flex flex-row max-w-fit">
+              Logout
+              <ArrowRightOnRectangleIcon className="h-6" />
+            </button>
+          </div>
+        ) : (
+          <div className="text-white bg-main-600 h-full flex flex-col self-stretch p-2">
+            <Link className="transition duration-200 text-lg text-white rounded-lg hover:bg-main-500 hover:text-white p-1 flex flex-row justify-between" href="/login">Login <ArrowLeftOnRectangleIcon className="h-6" /></Link>
+            <Link className="transition duration-200 text-lg text-white rounded-lg hover:bg-main-500 hover:text-white p-1 flex flex-row justify-between" href="/register">Register <ArrowLeftOnRectangleIcon className="h-6" /></Link>
+          </div>
+        )}
+      </div>
 
     </div>
   )
