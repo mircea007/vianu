@@ -58,12 +58,14 @@ const Home: NextPage<PageProps> = ({ subdatastr }) => {
         <hr className="mb-4"/>
 
         <h2 className="text-3xl mb-2">Raport Evaluator</h2>
-        <Table data={subdata.tests.map((row: TestType) => [
+        {subdata.tests.error ?
+        (<span className="text-xl text-red-600">{subdata.tests.error}</span>) :
+        (<Table data={subdata.tests.map((row: TestType) => [
           (<span key={0} className={row.verdict == 'Accepted' ? 'text-green-600' : 'text-red-600'}>{row.verdict}</span>),
           row.points,
           row.time + 'ms',
           row.memory + 'kb'
-        ])} header={['Raport', 'Puncte', 'Timp', 'Memorie']} addIndexes={true} />
+        ])} header={['Raport', 'Puncte', 'Timp', 'Memorie']} addIndexes={true} />)}
       </main>
     </div>
   )

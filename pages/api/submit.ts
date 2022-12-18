@@ -33,8 +33,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     }
 
     const ret = await simpleQuery(
-      "INSERT INTO submissions (user_id, problem, verdict, sdate) VALUES ($1, $2, $3, $4) RETURNING id",
-      [user_token.id, req.body.pbname, 'Evaluating...', +(new Date())]
+      "INSERT INTO submissions (user_id, problem, verdict, sdate, points, time, memory, tests) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
+      [user_token.id, req.body.pbname, 'Evaluating...', +(new Date()), 0, 0, 0, JSON.stringify( { error: 'Evaluating' } )]
     )
 
     res.status( 200 ).json({ message: 'Submission sent' })
@@ -63,8 +63,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
       res.status( 500 ).json({ error: 'Internal Server error' })
     else{
       await simpleQuery(
-        "UPDATE submissions SET verdict=$1 WHERE id=$2",
-        ['Skiped evaluation', subid]
+        "UPDATE submissions SET verdict=$1, tests=$2 WHERE id=$2",
+        ['Skiped evaluation', JSON.stringify( { error: 'Internal Server Error (500): Skipped evaluation' } ), subid]
       )
     }
   }

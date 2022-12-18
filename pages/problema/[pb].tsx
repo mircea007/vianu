@@ -3,6 +3,7 @@ import { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import Link from 'next/link'
 
 import Header from '../../components/Header' // .tsx
 import { getPbData } from '../api/getpb' // .ts
@@ -55,7 +56,12 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
       <Header/>
       <main className="w-full p-8 flex flex-col gap-2">
-        <h1 className="text-5xl mb-4">{pbdata.title}</h1>
+        <div className="w-full flex flex-row justify-between items-end">
+          <h1 className="text-5xl mb-4">{pbdata.title}</h1>
+          <div className="text-lg">
+            <Link href={"/monitor?pb=" + pbdata.name}>vezi solutiile trimise</Link>
+          </div>
+        </div>
         <hr />
         <div className="flex flex-row gap-2 w-full justify-between">
           <span> autori: {pbdata.authors} </span>
