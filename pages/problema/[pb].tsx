@@ -2,11 +2,13 @@ import Head from 'next/head'
 import { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import { Header } from '../../components/Header' // .tsx
 import { getPbData } from '../api/getpb' // .ts
 
 import User from '../../components/User' // .tsx
+import { SubmitButton } from '../../components/Forms' // .tsx
 
 interface PageProps {
   pbdatastr: string
@@ -14,6 +16,38 @@ interface PageProps {
 
 const Home: NextPage<PageProps> = ({ pbdatastr }) => {
   const pbdata = JSON.parse( pbdatastr )[0]
+
+  const [loading, setLoading] = useState( false )
+  const [err, setErr] = useState( '' )
+
+  const submit = async (evt: React.SyntheticEvent) => {
+    evt.preventDefault()
+
+    setLoading( true )
+
+    const response = await fetch( "/api/submit", {
+      method: "post",
+      body: JSON.stringify({ pbname: pbdata.name }),
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      }
+    })
+
+    const json_response = await response.json()
+
+    if( response.status == 201 ){
+      router.push({
+        pathname: '/monitor',
+        query: { pb: pbdata.name }
+      })
+    }else if( response.status == 400 && json_response.error == 'Not logged in' ){
+      setErr( 'Not logged in!' )
+    }else{ // 500
+      setErr( 'Server error!' )
+    }
+
+    setLoading( false )
+  }
 
   return (
     <div>
@@ -31,15 +65,20 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
           <span className="flex flex-row gap-2"> adaugata de: <User uname={pbdata.contrib} /> </span>
           <span> rezolvata de {pbdata.solves} </span>
         </div>
-        <hr className="mb-4"/>
+        <hr className="mb-4" />
         <div dangerouslySetInnerHTML={{__html: pbdata.statement}} />
+        <hr className="mt-4" />
+        <form onSubmit={submit}>
+          <SubmitButton value="trimite" disabled={loading}/>
+        </form>
       </main>
     </div>
   )
 }
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
-  const data = await getPbData( ctx.query.pb as string );
+  const pbname = ctx.query.pb as string
+  const data = await getPbData( pbname )
 
   if( !data.length )
     return { notFound: true }
