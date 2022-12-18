@@ -16,12 +16,25 @@ interface PageProps {
 }
 
 const Home: NextPage<PageProps> = ({ tdata_string }) => {
+  const points2col = (points: number) => {
+    if( !points )
+      return 'text-red-600'
+
+    if( points == 100 )
+      return 'text-green-600'
+
+    if( points >= 50 )
+      return 'text-yellow-600'
+
+    return 'text-red-600'
+  }
+
   const tdata = JSON.parse( tdata_string ).map( (row: SubData, idx: number) => [
-    row.id, // in viitor aici va fi un link
+    '#' + row.id, // in viitor aici va fi un link
     (<User uname={row.uname}/>),
     (<Link href={"/problema/" + row.problem}>{row.problem}</Link>),
     (new Date()).toLocaleString( 'ro-RO' ),
-    row.verdict + (row.poins != null ? (': ' + row.points) : '')
+    (<Link href={"/view/" + row.id} className={'subtle ' + points2col( row.points )}>{row.verdict + (row.points != null ? (': ' + row.points + 'p') : '')}</Link>)
   ])
 
   return (

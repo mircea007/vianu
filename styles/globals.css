@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+a:not(.subtle) {
+  @apply text-blue-500 hover:text-blue-400 hover:underline;
+}
+
 a {
-  @apply text-blue-500 hover:text-blue-400;
+  @apply hover:underline;
 }
 
 td, th {

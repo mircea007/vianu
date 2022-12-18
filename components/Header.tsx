@@ -45,7 +45,7 @@ export function Header( { className }: { className?: string } ){
 
       {login ? (
         <div className="text-white bg-main-600 h-full p-2 flex flex-col items-center">
-          <User uname={uname} className="text-white hover:text-white hover:bg-main-500 transition duration-200 p-1 rounded-lg"/>
+          <User uname={uname} className="subtle hover:bg-main-500 transition duration-200 p-1 rounded-lg"/>
           <button onClick={ _ => {
             removeToken()
             router.reload()
