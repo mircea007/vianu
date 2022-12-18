@@ -12,6 +12,13 @@ interface PageProps {
   subdatastr: string
 }
 
+interface TestType {
+  verdict: string
+  points: number
+  time: number
+  memory: number
+}
+
 const Home: NextPage<PageProps> = ({ subdatastr }) => {
   const subdata = JSON.parse( subdatastr )[0]
 
@@ -51,8 +58,8 @@ const Home: NextPage<PageProps> = ({ subdatastr }) => {
         <hr className="mb-4"/>
 
         <h2 className="text-3xl mb-2">Raport Evaluator</h2>
-        <Table data={subdata.tests.map((row) => [
-          (<span className={row.verdict == 'Accepted' ? 'text-green-600' : 'text-red-600'}>{row.verdict}</span>),
+        <Table data={subdata.tests.map((row: TestType) => [
+          (<span key={0} className={row.verdict == 'Accepted' ? 'text-green-600' : 'text-red-600'}>{row.verdict}</span>),
           row.points,
           row.time + 'ms',
           row.memory + 'kb'
@@ -63,7 +70,7 @@ const Home: NextPage<PageProps> = ({ subdatastr }) => {
 }
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
-  const data = await getSubData( ctx.query.id as number );
+  const data = await getSubData( +(ctx.query.id as string) );
 
   if( !data.length )
     return { notFound: true }

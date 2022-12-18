@@ -1,3 +1,4 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
 import Cookies from 'universal-cookie'
 import simpleQuery from './no_brain_db' // .ts
 
@@ -21,7 +22,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     const cookies = new Cookies( req.headers.cookie )
     const token = cookies.get( token_cookie_name )
 
-    let user_token = {}
+    let user_token: JwtPayload = { name: 'gigel', id: -1 }
 
     try{
       user_token = jwt.verify( token, process.env.JWT_TOKEN as string ) as JwtPayload
