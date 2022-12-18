@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import User from './User' // .tsx
 
-function PointlessAnimation( { text, className }: { text: string, className: string } ){
-  return (<div className={"flex flex-row gap-0 " + className}>{[...text].map( (ch: string, idx: number) => (
+function PointlessAnimation( { text, className }: { text: string, className?: string } ){
+  return (<div className={"flex flex-row gap-0 " + (className || '')}>{text.split('').map( (ch: string, idx: number) => (
     <span key={idx} className="inline-block hover:-translate-y-2 transition duration-200">{ch}</span>
   ))}</div>)
 }
@@ -67,8 +67,8 @@ export default function Header( { className }: { className?: string } ){
           </div>
         ) : (
           <div className="text-white bg-main-600 h-full flex flex-col self-stretch p-2">
-            <Link className="transition duration-200 text-lg text-white rounded-lg hover:bg-main-500 hover:text-white p-1 flex flex-row justify-between" href="/login">Login <ArrowLeftOnRectangleIcon className="h-6" /></Link>
-            <Link className="transition duration-200 text-lg text-white rounded-lg hover:bg-main-500 hover:text-white p-1 flex flex-row justify-between" href="/register">Register <ArrowLeftOnRectangleIcon className="h-6" /></Link>
+            <Link className="nostyle transition duration-200 text-lg rounded-lg hover:bg-main-500 p-1 flex flex-row justify-between" href="/login">Login <ArrowLeftOnRectangleIcon className="h-6" /></Link>
+            <Link className="nostyle transition duration-200 text-lg rounded-lg hover:bg-main-500 p-1 flex flex-row justify-between" href="/register">Register <ArrowLeftOnRectangleIcon className="h-6" /></Link>
           </div>
         )}
       </div>
