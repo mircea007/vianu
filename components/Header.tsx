@@ -1,8 +1,9 @@
 import { getToken, removeToken } from './JWT' // .ts
 import { useEffect, useState } from 'react'
-import { UserIcon, ArrowRightOnRectangleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
+import { ArrowRightOnRectangleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import User from './User' // .tsx
 
 export function Header( { className }: { className?: string } ){
   const [login, setLogin] = useState( false )
@@ -44,10 +45,7 @@ export function Header( { className }: { className?: string } ){
 
       {login ? (
         <div className="text-white bg-main-600 h-full p-2 flex flex-col gap-1 items-center">
-          <div className="flex flex-row gap-1">
-            <UserIcon className="h-6" />
-            <span className="text-lg">{uname}</span>
-          </div>
+          <User uname={uname} className="text-white hover:text-main-100"/>
           <button onClick={ _ => {
             removeToken()
             router.reload()
