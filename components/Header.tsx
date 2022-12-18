@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import User from './User' // .tsx
 
-export function Header( { className }: { className?: string } ){
+export default function Header( { className }: { className?: string } ){
   const [login, setLogin] = useState( false )
   const [uname, setUname] = useState( '' )
 

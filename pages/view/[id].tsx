@@ -3,10 +3,10 @@ import Link from 'next/link'
 import { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 
-import { Header } from '../../components/Header' // .tsx
+import Header from '../../components/Header' // .tsx
 import User from '../../components/User' // .tsx
 import { getSubData } from '../api/view' // .ts
-import { Table } from '../../components/Table' // .tsx
+import Table from '../../components/Table' // .tsx
 
 interface PageProps {
   subdatastr: string

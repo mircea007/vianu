@@ -3,8 +3,8 @@ import { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 
-import { Header } from '../components/Header' // .tsx
-import { Table } from '../components/Table' // .tsx
+import Header from '../components/Header' // .tsx
+import Table from '../components/Table' // .tsx
 import { getMonitor } from './api/monitor' // .ts
 import User from '../components/User' // .tsx
 

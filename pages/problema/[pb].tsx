@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-import { Header } from '../../components/Header' // .tsx
+import Header from '../../components/Header' // .tsx
 import { getPbData } from '../api/getpb' // .ts
 
 import User from '../../components/User' // .tsx

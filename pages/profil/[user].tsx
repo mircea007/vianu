@@ -1,9 +1,8 @@
 import Head from 'next/head'
 import { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
-import { useRouter } from 'next/router'
 
-import { Header } from '../../components/Header' // .tsx
+import Header from '../../components/Header' // .tsx
 import { getUserData } from '../api/getuser' // .ts
 
 interface PageProps {
