@@ -2,16 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-a:not(.subtle) {
+a:not(.subtle,.nostyle) {
   @apply text-blue-500 hover:text-blue-400 hover:underline;
 }
 
-a {
+a:not(.nostyle) {
   @apply hover:underline;
 }
 
 td, th {
-  @apply border border-black p-2;
+  @apply border border-black py-1 px-2;
 }
 
 th {

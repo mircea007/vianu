@@ -36,7 +36,7 @@ export function Header( { className }: { className?: string } ){
 
   return (
     <div className={"w-full bg-main-700 flex flex-row justify-between " + className || ""}>
-      <Link className="flex flex-row items-center text-5xl italic p-3" href="/">
+      <Link className="hover:font-bold hover:tracking-tight nostyle flex flex-row items-center text-5xl italic p-3" href="/">
         <span className="text-main-400">Vianu</span>
         <span className="text-white">Arena
           <sup className="text-3xl">*</sup>

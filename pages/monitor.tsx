@@ -33,7 +33,7 @@ const Home: NextPage<PageProps> = ({ tdata_string }) => {
     '#' + row.id, // in viitor aici va fi un link
     (<User uname={row.uname}/>),
     (<Link href={"/problema/" + row.problem}>{row.problem}</Link>),
-    (new Date()).toLocaleString( 'ro-RO' ),
+    (new Date(+row.sdate)).toLocaleString( 'ro-RO' ),
     (<Link href={"/view/" + row.id} className={'subtle ' + points2col( row.points )}>{row.verdict + (row.points != null ? (': ' + row.points + 'p') : '')}</Link>)
   ])
 

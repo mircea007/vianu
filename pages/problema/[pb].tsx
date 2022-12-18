@@ -15,6 +15,7 @@ interface PageProps {
 }
 
 const Home: NextPage<PageProps> = ({ pbdatastr }) => {
+  const router = useRouter()
   const pbdata = JSON.parse( pbdatastr )[0]
 
   const [loading, setLoading] = useState( false )
@@ -35,11 +36,8 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
     const json_response = await response.json()
 
-    if( response.status == 201 ){
-      router.push({
-        pathname: '/monitor',
-        query: { pb: pbdata.name }
-      })
+    if( response.status == 200 ){
+      router.push( '/monitor?pb=' + pbdata.name )
     }else if( response.status == 400 && json_response.error == 'Not logged in' ){
       setErr( 'Not logged in!' )
     }else{ // 500
