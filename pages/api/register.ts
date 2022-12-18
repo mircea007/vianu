@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 const verify_query = "SELECT * FROM users WHERE name=$1"
-const insert_query = "INSERT INTO users (name, phash, email) VALUES ($1, $2, $3) RETURNING id"
+const insert_query = "INSERT INTO users (name, phash, email, rdate) VALUES ($1, $2, $3, $4) RETURNING id"
 const bcrypt_niter = 11;
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse ){
@@ -30,7 +30,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     }
 
     bcrypt.hash( user_data.pass, bcrypt_niter ).then( phash => {
-      client.query( insert_query, [user_data.name, phash, user_data.email] ).then( qres => {
+      client.query( insert_query, [user_data.name, phash, user_data.email, +(new Date())] ).then( qres => {
         const user_id = qres.rows[0].id;
 
         const user_token = jwt.sign({

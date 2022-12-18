@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 
 import { Header } from '../../components/Header' // .tsx
-import { getPbData } from '.././api/getpb' // .ts
+import { getPbData } from '../api/getpb' // .ts
 
 interface PageProps {
   pbdatastr: string
@@ -38,6 +38,9 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
   const data = await getPbData( ctx.query.pb as string );
+
+  if( !data.length )
+    return { notFound: true }
 
   return { props: {
     pbdatastr: JSON.stringify( data )
