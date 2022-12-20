@@ -15,19 +15,21 @@ interface PageProps {
   pbdatastr: string
 }
 
+
+
 const Home: NextPage<PageProps> = ({ pbdatastr }) => {
   const router = useRouter()
-  const pbdata = JSON.parse( pbdatastr )[0]
+  const pbdata = JSON.parse(pbdatastr)[0]
 
-  const [loading, setLoading] = useState( false )
-  const [err, setErr] = useState( '' )
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState('')
 
   const submit = async (evt: React.SyntheticEvent) => {
     evt.preventDefault()
 
-    setLoading( true )
+    setLoading(true)
 
-    const response = await fetch( "/api/submit", {
+    const response = await fetch("/api/submit", {
       method: "post",
       body: JSON.stringify({ pbname: pbdata.name }),
       headers: {
@@ -37,15 +39,15 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
     const json_response = await response.json()
 
-    if( response.status == 200 ){
-      router.push( '/monitor?pb=' + pbdata.name )
-    }else if( response.status == 400 && json_response.error == 'Not logged in' ){
-      setErr( 'Not logged in!' )
-    }else{ // 500
-      setErr( 'Server error!' )
+    if (response.status == 200) {
+      router.push('/monitor?pb=' + pbdata.name)
+    } else if (response.status == 400 && json_response.error == 'Not logged in') {
+      setErr('Not logged in!')
+    } else { // 500
+      setErr('Server error!')
     }
 
-    setLoading( false )
+    setLoading(false)
   }
 
   return (
@@ -54,7 +56,8 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
         <title>VianuArena *</title>
       </Head>
 
-      <Header/>
+      <Header />
+
       <main className="w-full p-8 flex flex-col gap-2">
         <div className="w-full flex flex-row justify-between items-end">
           <h1 className="text-5xl mb-4">{pbdata.title}</h1>
@@ -70,10 +73,10 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
           <span> rezolvata de {pbdata.solves} </span>
         </div>
         <hr className="mb-4" />
-        <div dangerouslySetInnerHTML={{__html: pbdata.statement}} />
+        <div dangerouslySetInnerHTML={{ __html: pbdata.statement }} />
         <hr className="mt-4" />
         <form onSubmit={submit}>
-          <SubmitButton value="trimite" disabled={loading}/>
+          <SubmitButton message="Sursa ta este in curs de evaluare. Te rugam sa astepti cateva momente!" value="trimite" disabled={loading} />
         </form>
       </main>
     </div>
@@ -82,14 +85,16 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
   const pbname = ctx.query.pb as string
-  const data = await getPbData( pbname )
+  const data = await getPbData(pbname)
 
-  if( !data.length )
+  if (!data.length)
     return { notFound: true }
 
-  return { props: {
-    pbdatastr: JSON.stringify( data )
-  } }
+  return {
+    props: {
+      pbdatastr: JSON.stringify(data)
+    }
+  }
 }
 
 export default Home
