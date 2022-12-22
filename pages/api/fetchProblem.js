@@ -2,6 +2,7 @@
 //nu inchide browserul
 //alege directoru-ul unde se descarca
 //pt separarea exemplelor.... split('\n');
+//node ./pages/api/fetchProblem
 
 const puppeteer = require('puppeteer');
 const fs = require('fs');
