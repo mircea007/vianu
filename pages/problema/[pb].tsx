@@ -21,18 +21,21 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
   const [loading, setLoading] = useState( false )
   const [err, setErr] = useState( '' )
+  const [source, setSource] = useState( null )
 
   const submit = async (evt: React.SyntheticEvent) => {
     evt.preventDefault()
 
     setLoading( true )
 
+    const formData = new FormData()
+
+    formData.append( 'source', source )
+    formData.append( 'pbname', pbdata.name )
+
     const response = await fetch( "/api/submit", {
       method: "post",
-      body: JSON.stringify({ pbname: pbdata.name }),
-      headers: {
-        "Content-type": "application/json;charset=UTF-8",
-      }
+      body: formData
     })
 
     const json_response = await response.json()
@@ -73,6 +76,10 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
         <div dangerouslySetInnerHTML={{__html: pbdata.statement}} />
         <hr className="mt-4" />
         <form onSubmit={submit}>
+          <input name="source" type="file" accept=".c,.cpp" onChange={(evt) => {
+            console.log( evt )
+            setSource( evt.target.files[0] )
+          }}/> <br />
           <SubmitButton value="trimite" disabled={loading}/>
         </form>
       </main>

@@ -24,7 +24,10 @@ interface PageProps {
 }
 
 const Home: NextPage<PageProps> = ({ tdata_string }) => {
-  const points2col = (points: number) => {
+  const getCol = ( points: number, verdict: string ) => {
+    if( verdict == 'Evaluating...' )
+      return 'text-gray-400'
+
     if( !points )
       return 'text-red-600'
 
@@ -42,7 +45,7 @@ const Home: NextPage<PageProps> = ({ tdata_string }) => {
     (<User key={0} uname={row.uname}/>),
     (<Link key={1} href={"/problema/" + row.problem}>{row.problem}</Link>),
     (new Date(+row.sdate)).toLocaleString( 'ro-RO' ),
-    (<Link key={2} href={"/view/" + row.id} className={'subtle ' + points2col( row.points )}>{row.verdict + ': ' + row.points + 'p'}</Link>),
+    (<Link key={2} href={"/view/" + row.id} className={'subtle ' + getCol( row.points, row.verdict )}>{row.verdict + ': ' + row.points + 'p'}</Link>),
     row.time + 'ms',
     row.memory + 'kb'
   ])

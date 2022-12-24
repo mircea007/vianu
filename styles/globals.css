@@ -10,15 +10,15 @@ a:not(.nostyle) {
   @apply hover:underline;
 }
 
-td, th {
+.my-table td, .my-table th {
   @apply border border-black py-1 px-2;
 }
 
-th {
+.my-table th {
   @apply bg-main-600 text-white;
 }
 
-tr.row-even {
+.my-table tr.row-even {
   @apply bg-gray-200;
 }
 

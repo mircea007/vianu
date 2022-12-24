@@ -1,5 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Cookies from 'universal-cookie'
+import formidable from 'formidable'
+import fs from 'fs'
+
 import simpleQuery from './no_brain_db' // .ts
 
 import jwt from 'jsonwebtoken'
@@ -13,6 +16,12 @@ declare module "jsonwebtoken" {
 }
 
 const token_cookie_name = "auth-jwt"
+
+export const config = {
+  api: {
+    bodyParser: false
+  }
+}
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse ){
   let post_200 = false
@@ -32,9 +41,23 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
       return
     }
 
+    const form = formidable({ }) // might config later
+
+    const [fields, files] = await new Promise( (resolve, reject) => {
+      form.parse( req, ( err, fields, files ) => {
+        if( err )
+          reject( err )
+        else
+          resolve( [fields, files] )
+      } )
+    } )
+
+    const pbname = fields.pbname; // numele problemei
+    const source_txt = fs.readFileSync( files.source.filepath, 'utf8' ) // sursa ca string
+
     const ret = await simpleQuery(
-      "INSERT INTO submissions (user_id, problem, verdict, sdate, points, time, memory, tests) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
-      [user_token.id, req.body.pbname, 'Evaluating...', +(new Date()), 0, 0, 0, JSON.stringify( { error: 'Evaluating' } )]
+      "INSERT INTO submissions (user_id, problem, verdict, sdate, points, time, memory, tests, source) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id",
+      [user_token.id, pbname, 'Evaluating...', +(new Date()), 0, 0, 0, JSON.stringify( { error: 'Evaluating' } ), source_txt]
     )
 
     res.status( 200 ).json({ message: 'Submission sent' })
@@ -45,7 +68,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
     const response = await fetch( process.env.EVAL_SERVER as string, {
       method: "post",
-      body: JSON.stringify( {} ),
+      body: JSON.stringify( { source: source_txt } ),
       headers: {
         "Content-type": "application/json;charset=UTF-8",
       }

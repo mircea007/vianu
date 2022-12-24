@@ -22,7 +22,10 @@ interface TestType {
 const Home: NextPage<PageProps> = ({ subdatastr }) => {
   const subdata = JSON.parse( subdatastr )[0]
 
-  const points2col = (points: number) => {
+  const getCol = ( points: number, verdict: string ) => {
+    if( verdict == 'Evaluating...' )
+      return 'text-gray-400'
+
     if( !points )
       return 'text-red-600'
 
@@ -50,7 +53,7 @@ const Home: NextPage<PageProps> = ({ subdatastr }) => {
           <div> problema <Link href={"/problema/" + subdata.pbname}>{subdata.pbtitle}</Link> </div>
           <User uname={subdata.uname} className="place-content-center"/>
           <span>vezi sursa</span>
-          <span className={points2col( subdata.points )}>{subdata.verdict}</span>
+          <span className={getCol( subdata.points, subdata.verdict )}>{subdata.verdict}</span>
           <span>{subdata.points} puncte</span>
           <span>timp: {subdata.time}ms</span>
           <span>memorie: {subdata.memory}kb</span>
@@ -66,6 +69,21 @@ const Home: NextPage<PageProps> = ({ subdatastr }) => {
           row.time + 'ms',
           row.memory + 'kb'
         ])} header={['Raport', 'Puncte', 'Timp', 'Memorie']} addIndexes={true} />)}
+        <h2 className="text-3xl mb-2">Sursa</h2>
+        {subdata.source ? (
+          <pre>
+            <table className="w-full">
+              <tbody>
+                <tr><th className="w-4"></th><th></th></tr>
+                {subdata.source.split(/\r?\n/).map( (line, idx) => (
+                  <tr key={idx}><td className="select-none text-right">{idx + 1}</td><td className="pl-4">{line}</td></tr>
+                ) )}
+              </tbody>
+            </table>
+          </pre>
+        ) : (
+          <span className="text-red-600">Eroare in gasirea sursei</span>
+        )}
       </main>
     </div>
   )

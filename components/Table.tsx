@@ -9,7 +9,7 @@ interface TableProps {
 
 export default function Table( { header, data, className, addIndexes }: TableProps ){
   return (
-    <table className={className}>
+    <table className={"my-table " + className}>
       <tbody>
         {/* table header */}
         <tr>{addIndexes ? (<th>Nr.</th>): null}{header.map( (col, idx) => (<th key={idx}>{col}</th>) )}</tr>
