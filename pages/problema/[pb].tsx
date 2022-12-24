@@ -75,13 +75,13 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
         <hr className="mb-4" />
         <div dangerouslySetInnerHTML={{__html: pbdata.statement}} />
         <hr className="mt-4" />
-        <form onSubmit={submit}>
+        <form onSubmit={submit} className="flex flex-row gap-2 items-center">
+          <SubmitButton value="trimite" disabled={loading}/>
           <input name="source" type="file" accept=".c,.cpp" onChange={(evt) => {
             console.log( evt )
             if( evt.target.files )
               setSource( evt.target.files[0] )
           }}/> <br />
-          <SubmitButton value="trimite" disabled={loading}/>
         </form>
       </main>
     </div>
