@@ -21,7 +21,7 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
   const [loading, setLoading] = useState( false )
   const [err, setErr] = useState( '' )
-  const [source, setSource] = useState( null )
+  const [source, setSource] = useState<File>()
 
   const submit = async (evt: React.SyntheticEvent) => {
     evt.preventDefault()
@@ -30,7 +30,7 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
 
     const formData = new FormData()
 
-    formData.append( 'source', source )
+    formData.append( 'source', source as File )
     formData.append( 'pbname', pbdata.name )
 
     const response = await fetch( "/api/submit", {
@@ -78,7 +78,8 @@ const Home: NextPage<PageProps> = ({ pbdatastr }) => {
         <form onSubmit={submit}>
           <input name="source" type="file" accept=".c,.cpp" onChange={(evt) => {
             console.log( evt )
-            setSource( evt.target.files[0] )
+            if( evt.target.files )
+              setSource( evt.target.files[0] )
           }}/> <br />
           <SubmitButton value="trimite" disabled={loading}/>
         </form>

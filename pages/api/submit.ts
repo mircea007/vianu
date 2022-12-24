@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import Cookies from 'universal-cookie'
+import type { Fields, Files, File } from 'formidable'
 import formidable from 'formidable'
+
+import Cookies from 'universal-cookie'
 import fs from 'fs'
 
 import simpleQuery from './no_brain_db' // .ts
@@ -13,6 +15,11 @@ declare module "jsonwebtoken" {
     name: string,
     id: number
   }
+}
+
+interface FormData {
+  fields: Fields,
+  files: Files
 }
 
 const token_cookie_name = "auth-jwt"
@@ -41,19 +48,19 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
       return
     }
 
-    const form = formidable({ }) // might config later
+    const form = formidable({ multiples: false }) // might config later
 
-    const [fields, files] = await new Promise( (resolve, reject) => {
+    const { fields, files } = await new Promise<FormData>( (resolve, reject) => {
       form.parse( req, ( err, fields, files ) => {
         if( err )
           reject( err )
         else
-          resolve( [fields, files] )
+          resolve( { fields: fields, files: files } )
       } )
     } )
 
     const pbname = fields.pbname; // numele problemei
-    const source_txt = fs.readFileSync( files.source.filepath, 'utf8' ) // sursa ca string
+    const source_txt = fs.readFileSync( (files.source as File).filepath, 'utf8' ) // sursa ca string
 
     const ret = await simpleQuery(
       "INSERT INTO submissions (user_id, problem, verdict, sdate, points, time, memory, tests, source) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id",

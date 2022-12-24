@@ -69,13 +69,15 @@ const Home: NextPage<PageProps> = ({ subdatastr }) => {
           row.time + 'ms',
           row.memory + 'kb'
         ])} header={['Raport', 'Puncte', 'Timp', 'Memorie']} addIndexes={true} />)}
+
         <h2 className="text-3xl mb-2">Sursa</h2>
+        <hr />
         {subdata.source ? (
           <pre>
             <table className="w-full">
               <tbody>
                 <tr><th className="w-4"></th><th></th></tr>
-                {subdata.source.split(/\r?\n/).map( (line, idx) => (
+                {subdata.source.split(/\r?\n/).map( (line: string, idx: number) => (
                   <tr key={idx}><td className="select-none text-right">{idx + 1}</td><td className="pl-4">{line}</td></tr>
                 ) )}
               </tbody>
